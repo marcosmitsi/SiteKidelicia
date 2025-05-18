@@ -1,7 +1,7 @@
 <?php
 // Incluímos o arquivo api.php onde está a função apiRequest()
 // Essa função será usada para fazer a requisição GET para a API
-include 'includes/api.php';
+require_once 'includes/api.php';
 
 // Chamamos a API na rota /clientes usando método GET para buscar todos os clientes
 $clientes = apiRequest('/clientes');
