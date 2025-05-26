@@ -1,10 +1,10 @@
 <?php
-// Importa (apenas uma vez) a função apiRequest() que faz a chamada cURL
+
 require_once 'includes/api.php';
 
-//usuário clicou no botão “Cadastrar Cliente” o bloco abaixo monta os dados,chama a API e exibe a mensagem de resultado.
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Cria um array associativo com os campos recebidos do formulário
+   
     $data = [
         'nome' => $_POST['nome'],
         'email' => $_POST['email'],
@@ -12,9 +12,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'endereco' => $_POST['endereco']
 
     ];
-    // Envia os dados para a API (POST /clientes) e recebe resposta em array
+   
     $response = apiRequest('/clientes', 'POST', $data);
-    // Interpreta a resposta da API e mostra feedback ao usuário
+
     if (isset($response['mensagem'])) {
         echo "<p>{$response['mensagem']}</p>";
     } elseif (isset($response['erro'])) {
