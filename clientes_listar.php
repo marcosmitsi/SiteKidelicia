@@ -1,80 +1,72 @@
 <?php
+$title = "Listar Clientes";
+require_once 'includes/header.php';
 
-require_once 'includes/api.php';
+// Requisição para buscar os clientes via API
+$url = "http://localhost/kidelicia/public/api/clientes";
+$ch = curl_init($url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+$response = curl_exec($ch);
+curl_close($ch);
 
-
-$clientes = apiRequest('/clientes');
-
-
+$clientes = json_decode($response, true);
 ?>
-<!DOCTYPE html>
-<html>
 
-<head>
-    <title>Listar Clientes - KiDelicia</title>
-    <style>
-       
-        table {
-            width: 80%;
-            border-collapse: collapse;
-            margin: 20px auto;
-        }
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h4">Lista de Clientes</h1>
+        <a href="clientes.php" class="btn btn-success">+ Novo Cliente</a>
+    </div>
 
-        th,
-        td {
-            border: 1px solid #333;
-            padding: 10px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        h1 {
-            text-align: center;
-        }
-    </style>
-</head>
-
-<body>
-    <h1>Lista de Clientes Cadastrados</h1>
-
-    
-    <?php if (is_array($clientes) && count($clientes) > 0): ?>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>Email</th>
-                    <th>Telefone</th>
-                    <th>Endereço</th>
-                    <th>Criado em</th>
-                </tr>
-            </thead>
-            <tbody>
-               
-                <?php foreach ($clientes as $cliente): ?>
+    <?php if (is_array($clientes)): ?>
+        <div class="table-responsive">
+            <table id="tabelaClientes" class="table table-bordered table-hover table-striped bg-white shadow-sm">
+                <thead class="table-light">
                     <tr>
-                        <td><?= htmlspecialchars($cliente['id']) ?></td>
-                        <td><?= htmlspecialchars($cliente['nome']) ?></td>
-                        <td><?= htmlspecialchars($cliente['email']) ?></td>
-                        <td><?= htmlspecialchars($cliente['telefone']) ?></td>
-                        <td><?= htmlspecialchars($cliente['endereco']) ?></td>
-                        <td><?= htmlspecialchars($cliente['criado_em']) ?></td>
-
+                        <th>#ID</th>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Telefone</th>
+                        <th>Endereço</th>
+                        <th>Ações</th>
                     </tr>
-                <?php endforeach; ?>
-
-            </tbody>
-        </table>
-
-
+                </thead>
+                <tbody>
+                    <?php foreach ($clientes as $cliente): ?>
+                        <tr>
+                            <td><?= htmlspecialchars($cliente['id']) ?></td>
+                            <td><?= htmlspecialchars($cliente['nome']) ?></td>
+                            <td><?= htmlspecialchars($cliente['email']) ?></td>
+                            <td><?= htmlspecialchars($cliente['telefone']) ?></td>
+                            <td><?= htmlspecialchars($cliente['endereco']) ?></td>
+                            <td>
+                                <a href="editar_cliente.php?id=<?= $cliente['id'] ?>" class="btn btn-sm btn-warning">Editar</a>
+                                <a href="deletar_cliente.php?id=<?= $cliente['id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Deseja realmente excluir este cliente?')">Excluir</a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
     <?php else: ?>
-        <p style="text-align: center; color: red;">Nenhum cliente cadastrado.</p>
+        <div class="alert alert-warning">Nenhum cliente encontrado.</div>
     <?php endif; ?>
-</body>
+</div>
 
-</html>
+<!-- DataTables -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#tabelaClientes').DataTable({
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/pt-BR.json'
+            },
+            responsive: true
+        });
+    });
+</script>
+
+<?php require_once 'includes/footer.php'; ?>
