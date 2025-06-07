@@ -1,4 +1,5 @@
 <?php
+require_once 'includes/auth.php';
 include 'includes/api.php';
 
 $clientes = apiRequest('/clientes');

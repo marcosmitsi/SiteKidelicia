@@ -1,4 +1,5 @@
 <?php
+require_once 'includes/auth.php';
 $title = "Cadastro de Cliente";
 require_once 'includes/header.php';
 require_once 'includes/api.php';
@@ -51,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <div class="mb-3">
             <label for="endereco" class="form-label">Endereço</label>
-            <input type="text" name="endereco" id="endereco" class="form-control" required>
+            <input type="text" name="endereco" id="endereco" class="form-control" maxlength="15" required>
         </div>
 
         <button type="submit" class="btn btn-success">Cadastrar Cliente</button>

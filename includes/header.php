@@ -1,3 +1,8 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -13,6 +18,7 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            <?php if (isset($_SESSION['usuario'])): ?>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="index.php">Início</a></li>
@@ -20,6 +26,11 @@
                     <li class="nav-item"><a class="nav-link" href="clientes_listar.php">Clientes</a></li>
                     <li class="nav-item"><a class="nav-link" href="produtos.php">Produtos</a></li>
                 </ul>
+                
+                    <form class="d-flex ms-2" action="logout.php" method="POST">
+                        <button class="btn btn-outline-dark btn-sm" type="submit">Sair</button>
+                    </form>
+                <?php endif; ?>
             </div>
         </div>
     </nav>

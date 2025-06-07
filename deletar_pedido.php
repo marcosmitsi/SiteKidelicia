@@ -1,4 +1,5 @@
 <?php
+require_once 'includes/auth.php';
 // Verifica se o ID foi passado via GET
 $pedidoId = $_GET['id'] ?? null;
 

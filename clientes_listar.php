@@ -1,4 +1,5 @@
 <?php
+require_once 'includes/auth.php';
 $title = "Listar Clientes";
 require_once 'includes/header.php';
 

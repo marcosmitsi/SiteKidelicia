@@ -1,6 +1,8 @@
 <?php
+require_once 'includes/auth.php';
 $title = "Visualizar Pedido";
 require_once 'includes/header.php';
+
 
 $pedidoId = $_GET['id'] ?? null;
 

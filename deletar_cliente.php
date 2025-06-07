@@ -1,4 +1,5 @@
 <?php
+require_once 'includes/auth.php';
 $id = $_GET['id'] ?? null;
 
 if (!$id) {
